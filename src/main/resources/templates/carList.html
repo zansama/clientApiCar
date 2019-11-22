@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Car List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Car List</h1>
+<a href="/ajoutVoiture">Add Car</a>
+<br/><br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>Nom</th>
+            <th>Marque</th>
+            <th>Année</th>
+            <th>Prix</th>
+        </tr>
+        <tr th:each ="car : ${voitures}">
+            <td th:utext="${car.nom}">...</td>
+            <td th:utext="${car.marque}">...</td>
+            <td th:utext="${car.annee}">...</td>
+            <td th:utext="${car.prix}">...</td>
+            <td><a th:href="@{'/voitureListe/'+${car.id}}">Car detail</a></td>
+            <td><a href="#" class="delete" th:data-link="@{'/voiture/' + ${car.id}}">Delete</a></td>
+            <td><a th:href="@{'/modifVoiture/'+${car.id}}">Update Car</a></td>
+
+
+
+        </tr>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    $('.delete').on("click", (e) => {
+        e.preventDefault();
+    var link = $(e.target).data('link');
+    $.ajax({
+        url: link,
+        method: 'delete',
+
+
+        success: function () {
+            location.reload();
+        }
+    })
+    })
+</script>
+</body>
+</html>
